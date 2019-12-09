@@ -1,0 +1,193 @@
+frr version 4.0+cl3u13
+frr defaults datacenter
+hostname tti-core-1
+username cumulus nopassword
+!
+service integrated-vtysh-config
+!
+log syslog informational
+!
+interface vlan2020 vrf CLIENT1
+ description CLIENT1 CORE_FW 10.222.128.128/31
+!
+interface vlan2010
+ description ENG_NET_MGMT_10.123.32.0/24
+!
+router bgp 4267134597
+!
+router bgp 4267134597 vrf TTINT
+ bgp router-id 10.222.129.96
+ neighbor 10.222.128.81 remote-as external
+ neighbor 10.222.128.81 description TT-tt-BB-1
+ neighbor 10.222.128.129 remote-as external
+ neighbor 10.222.128.129 description TTI-tt-FW-1
+ neighbor 10.222.128.139 remote-as 4267134597
+ neighbor 10.222.128.139 description TTI-tt-CORE-2
+ neighbor 10.222.128.167 remote-as external
+ neighbor 10.222.128.167 description TTI-tt-MGMT-1
+ neighbor 10.222.128.191 remote-as external
+ neighbor 10.222.128.191 description TTI-tt-TOR-1
+ !
+ address-family ipv4 unicast
+  network 10.222.129.96/32 route-map RM_TTINT_network
+  network 10.222.129.128/28 route-map RM_TTINT_network
+  neighbor 10.222.128.81 route-map RM_TTINT_FROM_BB_1 in
+  neighbor 10.222.128.81 route-map RM_TTINT_TO_BB out
+  neighbor 10.222.128.167 route-map RM_TTINT_FROM_MGMT_1 in
+  neighbor 10.222.128.191 route-map RM_TTINT_FROM_TOR_1 in
+  maximum-paths 2
+ exit-address-family
+!
+router bgp 4267134597 vrf CLIENT1
+ bgp router-id 10.222.130.96
+ neighbor 10.222.128.81 remote-as external
+ neighbor 10.222.128.129 remote-as external
+ neighbor 10.222.128.129 description TTI-tt-FW-1
+ neighbor 10.222.128.139 remote-as external
+"/etc/frr/frr.conf" 101L, 2991C
+!
+router bgp 4267134597
+!
+router bgp 4267134597 vrf TTINT
+ bgp router-id 10.222.129.96
+ neighbor 10.222.128.81 remote-as external
+ neighbor 10.222.128.81 description TT-tt-BB-1
+ neighbor 10.222.128.129 remote-as external
+ neighbor 10.222.128.129 description TTI-tt-FW-1
+ neighbor 10.222.128.139 remote-as 4267134597
+ neighbor 10.222.128.139 description TTI-tt-CORE-2
+ neighbor 10.222.128.167 remote-as external
+ neighbor 10.222.128.167 description TTI-tt-MGMT-1
+ neighbor 10.222.128.191 remote-as external
+ neighbor 10.222.128.191 description TTI-tt-TOR-1
+ !
+ address-family ipv4 unicast
+  neighbor 10.222.128.191 route-map RM_TTINT_FROM_TOR_1 in
+  maximum-paths 2
+ exit-address-family
+!
+router bgp 4267134597 vrf CLIENT1
+ bgp router-id 10.222.130.96
+ neighbor 10.222.128.81 remote-as external
+ neighbor 10.222.128.129 remote-as external
+ neighbor 10.222.128.129 description TTI-tt-FW-1
+ neighbor 10.222.128.139 remote-as external
+ neighbor 10.222.128.139 description TTI-tt-CORE-2
+ neighbor 10.222.128.167 remote-as external
+ neighbor 10.222.128.167 description TTI-tt-MGMT-1
+ neighbor 10.222.128.191 remote-as external
+ !
+ address-family ipv4 unicast
+  maximum-paths 2
+ exit-address-family
+!
+ip prefix-list PL-CLIENT1_ROUTES seq 10 permit 10.222.130.32/27
+ip prefix-list PL-CLIENT1_ROUTES seq 20 permit 10.222.130.0/27
+ip prefix-list PL-TTINT_ROUTES seq 10 permit 10.222.129.128/28
+ip prefix-list PL-TTINT_ROUTES seq 20 permit 10.222.129.0/26
+!
+ip community-list standard CM-TTI-CLIENT1 permit 10:20200
+ip community-list standard CM-TTI-TTINT permit 10:20100
+!
+route-map RM_TTINT_TO_BB permit 10
+ match community CM-TTI-TTINT
+"/etc/frr/frr.conf" 96L, 2711C written
+cumulus@tti-core-1:mgmt-vrf:~$ sudo systemctl restart frr.service
+cumulus@tti-core-1:mgmt-vrf:~$ sudo cat /etc/frr/frr
+frr.conf                             frr.conf.18985.2019-09-10@20:20:17~  frr.conf.sav
+cumulus@tti-core-1:mgmt-vrf:~$ sudo cat /etc/frr/frr.conf
+frr version 4.0+cl3u13
+frr defaults datacenter
+hostname tti-core-1
+username cumulus nopassword
+!
+service integrated-vtysh-config
+!
+log syslog informational
+!
+interface vlan2020 vrf CLIENT1
+ description CLIENT1 CORE_FW 10.222.128.128/31
+!
+interface vlan2010
+ description ENG_NET_MGMT_10.123.32.0/24
+!
+router bgp 4267134597
+!
+router bgp 4267134597 vrf TTINT
+ bgp router-id 10.222.129.96
+ neighbor 10.222.128.81 remote-as external
+ neighbor 10.222.128.81 description TT-tt-BB-1
+ neighbor 10.222.128.129 remote-as external
+ neighbor 10.222.128.129 description TTI-tt-FW-1
+ neighbor 10.222.128.139 remote-as 4267134597
+ neighbor 10.222.128.139 description TTI-tt-CORE-2
+ neighbor 10.222.128.167 remote-as external
+ neighbor 10.222.128.167 description TTI-tt-MGMT-1
+ neighbor 10.222.128.191 remote-as external
+ neighbor 10.222.128.191 description TTI-tt-TOR-1
+ !
+ address-family ipv4 unicast
+  neighbor 10.222.128.191 route-map RM_TTINT_FROM_TOR_1 in
+  maximum-paths 2
+ exit-address-family
+!
+router bgp 4267134597 vrf CLIENT1
+ bgp router-id 10.222.130.96
+ neighbor 10.222.128.81 remote-as external
+ neighbor 10.222.128.129 remote-as external
+ neighbor 10.222.128.129 description TTI-tt-FW-1
+ neighbor 10.222.128.139 remote-as external
+ neighbor 10.222.128.139 description TTI-tt-CORE-2
+ neighbor 10.222.128.167 remote-as external
+ neighbor 10.222.128.167 description TTI-tt-MGMT-1
+ neighbor 10.222.128.191 remote-as external
+ !
+ address-family ipv4 unicast
+  maximum-paths 2
+ exit-address-family
+!
+ip prefix-list PL-CLIENT1_ROUTES seq 10 permit 10.222.130.32/27
+ip prefix-list PL-CLIENT1_ROUTES seq 20 permit 10.222.130.0/27
+ip prefix-list PL-TTINT_ROUTES seq 10 permit 10.222.129.128/28
+ip prefix-list PL-TTINT_ROUTES seq 20 permit 10.222.129.0/26
+!
+ip community-list standard CM-TTI-CLIENT1 permit 10:20200
+ip community-list standard CM-TTI-TTINT permit 10:20100
+!
+route-map RM_TTINT_TO_BB permit 10
+ match community CM-TTI-TTINT
+!
+route-map RM_CLIENT1_network permit 10
+ set community 10:20200
+!
+route-map CM-TTI-TTIN permit 10
+ set community 10:20100
+!
+route-map RM_CLIENT1_FROM_TOR_1 permit 10
+ set local-preference 200
+!
+route-map RM_CLIENT1_FROM_MGMT_1 permit 10
+ set local-preference 200
+!
+route-map RM_CLIENT1_FROM_BB_1 permit 10
+ set local-preference 200
+!
+route-map RM_TTINT_network permit 10
+ set community 10:20100
+!
+route-map RM_TTINT_FROM_TOR_1 permit 10
+ set local-preference 200
+!
+route-map RM_TTINT_FROM_MGMT_1 permit 10
+ set local-preference 200
+!
+route-map RM_TTINT_FROM_BB_1 permit 10
+ set local-preference 200
+!
+route-map RM-CLIENT1_EXPORT permit 10
+ match ip address prefix-list PL-CLIENT1_ROUTES
+!
+route-map RM-TTINT_EXPORT permit 10
+ match ip address prefix-list PL-TTINT_ROUTES
+!
+line vty

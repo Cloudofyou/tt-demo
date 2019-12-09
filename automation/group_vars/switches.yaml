@@ -1,0 +1,53 @@
+node:
+  t-spine-01:
+    ports:
+      - swp11
+      - swp12
+    routing:
+      lo: 10.1.1.1/32
+      bgp:
+        asn: 65111
+        underlay:
+          external:
+            peers:
+              - swp11
+              - swp12
+  t-spine-02:
+    ports:
+      - swp21
+      - swp22
+    routing:
+      lo: 10.2.2.2/32
+      bgp:
+        asn: 65111
+        underlay:
+          external:
+            peers:
+              - swp21
+              - swp22
+  t-leaf-01:
+    ports:
+      - swp11
+      - swp21
+    routing:
+      lo: 10.11.11.11/32
+      bgp:
+        asn: 65011
+        underlay:
+          external:
+            peers:
+              - swp11
+              - swp21
+  t-leaf-02:
+    ports:
+      - swp12
+      - swp22
+    routing:
+      lo: 10.12.12.12/32
+      bgp:
+        asn: 65012
+        underlay:
+          external:
+            peers:
+              - swp12
+              - swp22

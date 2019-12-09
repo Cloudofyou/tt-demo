@@ -1,0 +1,35 @@
+frr version 4.0+cl3u13
+frr defaults datacenter
+hostname tti-tor-1
+username cumulus nopassword
+!
+service integrated-vtysh-config
+!
+log syslog informational
+!
+interface vlan2022 vrf CLIENT1
+ description CLIENT1_TRADE_1
+!
+router bgp 4267134597
+!
+router bgp 4267134597 vrf CLIENT1
+ bgp router-id 10.222.130.96
+ neighbor 10.222.128.187 remote-as external
+ neighbor 10.222.128.187 description TTI-tt-TOR-2
+ neighbor 10.222.128.190 remote-as 4267134597
+ neighbor 10.222.128.190 description TTI-tt-CORE-2
+ !
+ address-family ipv4 unicast
+  maximum-paths 2
+ exit-address-family
+!
+ip community-list standard CM-TTI-CLIENT1 permit 10:20200
+!
+route-map RM_CLIENT1_network permit 10
+ set community 10:20200
+!
+route-map RM_CLIENT1_FROM_CORE_1 permit 10
+ set local-preference 200
+!
+line vty
+!

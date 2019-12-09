@@ -1,0 +1,36 @@
+auto lo
+iface lo inet loopback
+
+auto swp47
+iface swp47
+    alias Connection to tti-core-1
+
+auto CLIENT1
+iface CLIENT1
+    address 10.222.130.96/32
+    vrf-table auto
+
+auto bridge
+iface bridge
+    bridge-vids 2022
+    bridge-vlan-aware yes
+
+auto vagrant
+iface vagrant inet dhcp
+
+auto eth0
+iface eth0 inet dhcp
+ vrf mgmt
+
+auto mgmt
+iface mgmt
+  address 127.0.0.1/8
+  vrf-table auto
+
+auto vlan2022
+iface vlan2022
+    address 10.222.130.34/27
+    alias CLIENT1_TRADE_1
+    vlan-id 2022
+    vlan-raw-device bridge
+    vrf CLIENT1

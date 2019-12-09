@@ -1,0 +1,65 @@
+auto lo
+iface lo inet loopback
+
+auto swp52
+iface swp52
+
+auto swp53
+iface swp53
+
+auto CLIENT1
+iface CLIENT1
+    address 10.222.130.97/32
+    vrf-table auto
+
+auto TTINT
+iface TTINT
+    address 10.222.129.97/32
+    vrf-table auto
+
+auto bond1
+iface bond1
+    bond-slaves swp52 swp53
+    bridge-vids 2010
+
+auto bridge
+iface bridge
+    bridge-ports bond1
+    bridge-vids 2010 2013 2020
+    bridge-vlan-aware yes
+
+auto vagrant
+iface vagrant inet dhcp
+
+auto eth0
+iface eth0 inet dhcp
+ vrf mgmt
+
+auto mgmt
+iface mgmt
+  address 127.0.0.1/8
+  vrf-table auto
+
+auto vlan2010
+iface vlan2010
+    address 10.222.128.130/31
+    address 10.222.128.139/31
+    alias ENG_NET_MGMT_10.123.32.0/24
+    vlan-id 2010
+    vlan-raw-device bridge
+
+auto vlan2013
+iface vlan2013
+    address 10.222.129.131/28
+    alias TINT_HAP_1
+    vlan-id 2013
+    vlan-raw-device bridge
+    vrf TTINT
+
+auto vlan2020
+iface vlan2020
+    address 10.222.128.130/31
+    alias CLIENT1 CORE_FW 10.222.128.130/31
+    vlan-id 2020
+    vlan-raw-device bridge
+    vrf CLIENT1

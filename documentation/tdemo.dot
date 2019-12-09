@@ -1,0 +1,11 @@
+graph tdemo {
+ "tti-core-1" [function="leaf" os="CumulusCommunity/cumulus-vx" version="3.7.8" memory="1024" config="./helper_scripts/extra_switch_config.sh" mgmt_ip="192.168.200.1"]
+ "tti-core-2" [function="leaf" os="CumulusCommunity/cumulus-vx" version="3.7.8" memory="1024" config="./helper_scripts/extra_switch_config.sh" mgmt_ip="192.168.200.2"]
+ "tti-tor-1" [function="leaf" os="CumulusCommunity/cumulus-vx" version="3.7.8" memory="1024" config="./helper_scripts/extra_switch_config.sh" mgmt_ip="192.168.200.11"]
+ "tti-tor-2" [function="leaf" os="CumulusCommunity/cumulus-vx" version="3.7.8" memory="1024" config="./helper_scripts/extra_switch_config.sh" mgmt_ip="192.168.200.12"]
+
+ "tti-core-1":"swp53" -- "tti-core-2":"swp53"
+ "tti-core-1":"swp54" -- "tti-core-2":"swp54"
+ "tti-core-1":"swp32" -- "tti-tor-1":"swp47"
+ "tti-core-2":"swp32" -- "tti-tor-2":"swp47"
+ }
