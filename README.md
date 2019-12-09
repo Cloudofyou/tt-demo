@@ -1,4 +1,4 @@
-## tdmo
+## tt-demo
 
 ### Summary:
 
@@ -6,7 +6,7 @@ This is an Ansible demo which configures four Cumulus VX switches in a two spine
 
 ### Network Diagram:
 
-![Network Diagram](https://github.com/chronot1995/tdemo/blob/master/documentation/tdemo.png)
+![Network Diagram](https://github.com/cloudofyou/tt-demo/blob/master/documentation/tt-demo.png)
 
 ### Initializing the Linux / libvirt demo environment:
 
@@ -24,11 +24,11 @@ https://docs.cumulusnetworks.com/cumulus-vx/Development-Environments/Vagrant-and
 
 4 Copy the Git repo to your local machine:
 
-    ```git clone https://github.com/chronot1995/tdemo```
+    ```git clone https://github.com/cloudofyou/tt-demo```
 
 5. Change directories to the following
 
-    ```tdemo```
+    ```tt-demo```
 
 6. Run the following:
 
@@ -43,11 +43,11 @@ https://docs.cumulusnetworks.com/cumulus-vx/Development-Environments/Vagrant-and
 
 2. Copy the Git repo unto the oob-mgmt-server:
 
-    ```git clone https://github.com/chronot1995/tdemo```
+    ```git clone https://github.com/cloudofyou/tt-demo```
 
 3. Change directories to the following
 
-    ```tdemo/automation```
+    ```tt-demo/automation```
 
 4. Run the following:
 
