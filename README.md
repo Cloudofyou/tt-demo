@@ -6,7 +6,7 @@ This is an Ansible demo which configures four Cumulus VX switches in a two spine
 
 ### Network Diagram:
 
-![Network Diagram](https://github.com/cloudofyou/tt-demo/blob/master/documentation/tt-demo.png)
+![Network Diagram](https://github.com/cloudofyou/tt-demo/blob/master/documentation/TT-Diag-01.jpg)
 
 ### Initializing the Linux / libvirt demo environment:
 
