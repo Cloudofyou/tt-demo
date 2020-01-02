@@ -1,10 +1,10 @@
 ---
-- hosts: tti-tor-1 
+- hosts: tti-tor-1
   tasks:
    - name: Configure tti-tor-1
      nclu:
        commands:
-         
+
          - add bgp vrf CLIENT1 autonomous-system 65222
          - add bgp vrf CLIENT1 neighbor 10.222.128.187 remote-as 65222
          - add bgp vrf CLIENT1 neighbor 10.222.128.187 bfd
@@ -15,7 +15,7 @@
          - add bgp vrf CLIENT1 neighbor 10.222.128.187 next-hop-self
          - add bgp vrf CLIENT1 neighbor 10.222.128.187 send-community
          - add bgp vrf CLIENT1 neighbor 10.222.128.190 send-community
-         - add bgp vrf CLIENT1 network 10.222.130.32/27 
+         - add bgp vrf CLIENT1 network 10.222.130.32/27
          - add bond bond01 bond slaves swp53s1,swp54s1
          - add bond bond02 bond slaves swp53s2,swp54s2
          - add bond bond01 ip address 10.222.128.186/31
@@ -37,5 +37,140 @@
          - add vlan 2022 vrf CLIENT1
          - add vrf CLIENT1 ip address 10.222.130.96/32
          - add vrf CLIENT1,mgmt vrf-table auto
-       
+
+       commit: true
+
+- hosts: tti-tor-2
+  tasks:
+   - name: Configure tti-tor-2
+     nclu:
+       commands:
+
+         - add bgp vrf CLIENT1 autonomous-system 65222
+         - add bgp vrf CLIENT1 neighbor 10.222.128.186 remote-as 65222
+         - add bgp vrf CLIENT1 neighbor 10.222.128.186 bfd
+         - add bgp vrf CLIENT1 neighbor 10.222.128.186 description TTI-tt-TOR-2
+         - add bgp vrf CLIENT1 neighbor 10.222.128.188 remote-as 65111
+         - add bgp vrf CLIENT1 neighbor 10.222.128.188 bfd
+         - add bgp vrf CLIENT1 neighbor 10.222.128.188 description TTI-tt-CORE-1
+         - add bgp vrf CLIENT1 neighbor 10.222.128.186 next-hop-self
+         - add bgp vrf CLIENT1 neighbor 10.222.128.186 send-community
+         - add bgp vrf CLIENT1 neighbor 10.222.128.188 send-community
+         - add bgp vrf CLIENT1 network 10.222.130.32/27
+         - add bond bond01 bond slaves swp53s1,swp54s1
+         - add bond bond02 bond slaves swp53s2,swp54s2
+         - add bond bond01 ip address 10.222.128.187/31
+         - add bond bond01 vrf CLIENT1
+         - add bond bond02 bridge vids 2011,2022
+         - add bridge bridge ports bond02,swp1,swp2,swp3,swp4
+         - add bridge bridge vids 2011,2020,2022
+         - add bridge bridge vlan-aware
+         - add interface swp1-4 bridge access 2022
+         - add interface swp53s1-2,swp54s1-2
+         - add loopback lo ip address 10.222.130.97/32
+         - add vlan 2020 vlan-id 2020
+         - add vlan 2020 vlan-raw-device bridge
+         - add vlan 2020 vrf CLIENT1
+         - add vlan 2022 ip address 10.222.130.35/27
+         - add vlan 2022 ip address-virtual 00:5e:00:00:00:01 10.222.130.33/27
+         - add vlan 2022 vlan-id 2022
+         - add vlan 2022 vlan-raw-device bridge
+         - add vlan 2022 vrf CLIENT1
+         - add vrf CLIENT1 ip address 10.222.130.97/32
+         - add vrf CLIENT1,mgmt vrf-table auto
+
+       commit: true
+
+- hosts: tti-core-1
+  tasks:
+   - name: Configure tti-core-1
+     nclu:
+       commands:
+
+         - add bgp vrf CLIENT1 autonomous-system 65111
+         - add bgp vrf CLIENT1 neighbor 10.222.128.139 remote-as 65111
+         - add bgp vrf CLIENT1 neighbor 10.222.128.139 bfd
+         - add bgp vrf CLIENT1 neighbor 10.222.128.139 description TTI-tt-CORE-2
+         - add bgp vrf CLIENT1 neighbor 10.222.128.191 remote-as 65222
+         - add bgp vrf CLIENT1 neighbor 10.222.128.191 bfd
+         - add bgp vrf CLIENT1 neighbor 10.222.128.191 description TTI-tt-TOR-1
+         - add bgp vrf CLIENT1 neighbor 10.222.128.139 next-hop-self
+         - add bgp vrf CLIENT1 neighbor 10.222.128.139 send-community
+         - add bgp vrf CLIENT1 neighbor 10.222.128.191 send-community
+         - add bgp vrf CLIENT1 network 10.222.130.96/32
+         - add bond bond01 bond slaves swp53s1,swp53s2,swp54s1,swp54s2
+         - add bond bond02 bond slaves swp53s4,swp54s4
+         - add bond bond01 bridge vids 2010,2020
+         - add bond bond02 bridge vids 2011,2013
+         - add bridge bridge ports bond01,bond02
+         - add bridge bridge vids 2010-2011,2013,2020
+         - add bridge bridge vlan-aware
+         - add interface bond01.2010,2020 ip address 10.222.128.138/31
+         - add interface bond01.2010,swp32.2010 vrf TTINT
+         - add interface bond01.2020,swp32.2020 vrf CLIENT1
+         - add interface swp32,swp53s1-2,4,swp54s1-2,4
+         - add interface swp32.2010,2020 ip address 10.222.128.190/31
+         - add loopback lo ip address 10.222.129.96/32
+         - add loopback lo ip address 10.222.130.96/32
+         - add vlan 2010 alias TTINT_CORE_FWL
+         - add vlan 2010 vlan-id 2010
+         - add vlan 2010 vlan-raw-device bridge
+         - add vlan 2013 alias TTINT_HAP_1
+         - add vlan 2013 vlan-id 2013
+         - add vlan 2013 vlan-raw-device bridge
+         - add vlan 2020 alias CLIENT1_CORE_FWL
+         - add vlan 2020 vlan-id 2020
+         - add vlan 2020 vlan-raw-device bridge
+         - add vrf CLIENT1 ip address 10.222.130.96/32
+         - add vrf CLIENT1,mgmt,TTINT vrf-table auto
+         - add vrf TTINT ip address 10.222.129.96/32
+         - add vrf mgmt ip address 127.0.0.1/8
+
+       commit: true
+
+- hosts: tti-core-2
+  tasks:
+   - name: Configure tti-core-2
+     nclu:
+       commands:
+
+         - add bgp vrf CLIENT1 autonomous-system 65111
+         - add bgp vrf CLIENT1 neighbor 10.222.128.139 remote-as 65111
+         - add bgp vrf CLIENT1 neighbor 10.222.128.139 bfd
+         - add bgp vrf CLIENT1 neighbor 10.222.128.139 description TTI-tt-CORE-2
+         - add bgp vrf CLIENT1 neighbor 10.222.128.191 remote-as 65222
+         - add bgp vrf CLIENT1 neighbor 10.222.128.191 bfd
+         - add bgp vrf CLIENT1 neighbor 10.222.128.191 description TTI-tt-TOR-1
+         - add bgp vrf CLIENT1 neighbor 10.222.128.139 next-hop-self
+         - add bgp vrf CLIENT1 neighbor 10.222.128.139 send-community
+         - add bgp vrf CLIENT1 neighbor 10.222.128.191 send-community
+         - add bgp vrf CLIENT1 network 10.222.130.97/32
+         - add bond bond01 bond slaves swp53s1,swp53s2,swp54s1,swp54s2
+         - add bond bond02 bond slaves swp53s4,swp54s4
+         - add bond bond01 bridge vids 2010,2020
+         - add bond bond02 bridge vids 2011,2013
+         - add bridge bridge ports bond01,bond02
+         - add bridge bridge vids 2010-2011,2013,2020
+         - add bridge bridge vlan-aware
+         - add interface bond01.2010,2020 ip address 10.222.128.139/31
+         - add interface bond01.2010,swp32.2010 vrf TTINT
+         - add interface bond01.2020,swp32.2020 vrf CLIENT1
+         - add interface swp32,swp53s1-2,4,swp54s1-2,4
+         - add interface swp32.2010,2020 ip address 10.222.128.188/31
+         - add loopback lo ip address 10.222.129.97/32
+         - add loopback lo ip address 10.222.130.97/32
+         - add vlan 2010 alias TTINT_CORE_FWL
+         - add vlan 2010 vlan-id 2010
+         - add vlan 2010 vlan-raw-device bridge
+         - add vlan 2013 alias TTINT_HAP_1
+         - add vlan 2013 vlan-id 2013
+         - add vlan 2013 vlan-raw-device bridge
+         - add vlan 2020 alias CLIENT1_CORE_FWL
+         - add vlan 2020 vlan-id 2020
+         - add vlan 2020 vlan-raw-device bridge
+         - add vrf CLIENT1 ip address 10.222.130.97/32
+         - add vrf CLIENT1,mgmt,TTINT vrf-table auto
+         - add vrf TTINT ip address 10.222.129.97/32
+         - add vrf mgmt ip address 127.0.0.1/8
+
        commit: true
