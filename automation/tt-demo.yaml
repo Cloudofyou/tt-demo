@@ -134,15 +134,15 @@
        commands:
 
          - add bgp vrf CLIENT1 autonomous-system 65111
-         - add bgp vrf CLIENT1 neighbor 10.222.128.139 remote-as 65111
-         - add bgp vrf CLIENT1 neighbor 10.222.128.139 bfd
-         - add bgp vrf CLIENT1 neighbor 10.222.128.139 description TTI-tt-CORE-2
-         - add bgp vrf CLIENT1 neighbor 10.222.128.191 remote-as 65222
-         - add bgp vrf CLIENT1 neighbor 10.222.128.191 bfd
-         - add bgp vrf CLIENT1 neighbor 10.222.128.191 description TTI-tt-TOR-1
-         - add bgp vrf CLIENT1 neighbor 10.222.128.139 next-hop-self
-         - add bgp vrf CLIENT1 neighbor 10.222.128.139 send-community
-         - add bgp vrf CLIENT1 neighbor 10.222.128.191 send-community
+         - add bgp vrf CLIENT1 neighbor 10.222.128.138 remote-as 65111
+         - add bgp vrf CLIENT1 neighbor 10.222.128.138 bfd
+         - add bgp vrf CLIENT1 neighbor 10.222.128.138 description TTI-tt-CORE-2
+         - add bgp vrf CLIENT1 neighbor 10.222.128.189 remote-as 65222
+         - add bgp vrf CLIENT1 neighbor 10.222.128.189 bfd
+         - add bgp vrf CLIENT1 neighbor 10.222.128.189 description TTI-tt-TOR-1
+         - add bgp vrf CLIENT1 neighbor 10.222.128.138 next-hop-self
+         - add bgp vrf CLIENT1 neighbor 10.222.128.138 send-community
+         - add bgp vrf CLIENT1 neighbor 10.222.128.189 send-community
          - add bgp vrf CLIENT1 network 10.222.130.97/32
          - add bond bond01 bond slaves swp53s1,swp53s2,swp54s1,swp54s2
          - add bond bond02 bond slaves swp53s4,swp54s4
