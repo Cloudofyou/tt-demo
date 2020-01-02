@@ -124,7 +124,6 @@
          - add vrf CLIENT1 ip address 10.222.130.96/32
          - add vrf CLIENT1,mgmt,TTINT vrf-table auto
          - add vrf TTINT ip address 10.222.129.96/32
-         - add vrf mgmt ip address 127.0.0.1/8
 
        commit: true
 
@@ -171,6 +170,5 @@
          - add vrf CLIENT1 ip address 10.222.130.97/32
          - add vrf CLIENT1,mgmt,TTINT vrf-table auto
          - add vrf TTINT ip address 10.222.129.97/32
-         - add vrf mgmt ip address 127.0.0.1/8
 
        commit: true
