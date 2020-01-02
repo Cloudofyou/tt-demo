@@ -2,7 +2,7 @@
 # Created by Topology-Converter v4.7.0
 #    Template Revision: v4.7.0
 #    https://github.com/cumulusnetworks/topology_converter
-#    using topology data from: tdemo.dot
+#    using topology data from: ./tt-demo.dot
 
 echo "################################################"
 echo "  Running Automatic Management Server Setup..."
@@ -15,8 +15,8 @@ echo " Detected vagrant user is: $username"
 #       KNOBS
 #######################
 
-REPOSITORY="https://github.com/CumulusNetworks/tdemo"
-REPONAME="tdemo"
+REPOSITORY="https://github.com/CumulusNetworks/tt-demo"
+REPONAME="tt-demo"
 
 #Install Automation Tools
 puppet=0

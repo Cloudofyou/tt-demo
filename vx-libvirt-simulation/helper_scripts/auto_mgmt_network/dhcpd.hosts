@@ -2,7 +2,7 @@
 # Created by Topology-Converter v4.7.0
 #    Template Revision: v4.7.0
 #    https://github.com/cumulusnetworks/topology_converter
-#    using topology data from: tdemo.dot
+#    using topology data from: ./tt-demo.dot
 
 group {
 
@@ -13,14 +13,14 @@ group {
   option default-url = "http://192.168.200.254/onie-installer";
 
 
-host oob-mgmt-switch {hardware ethernet 44:38:39:00:00:13; fixed-address 192.168.200.3; option host-name "oob-mgmt-switch"; option cumulus-provision-url "http://192.168.200.254/ztp_oob.sh";  } 
+host oob-mgmt-switch {hardware ethernet 44:38:39:00:00:37; fixed-address 192.168.200.5; option host-name "oob-mgmt-switch"; option cumulus-provision-url "http://192.168.200.254/ztp_oob.sh";  } 
 
-host tti-core-1 {hardware ethernet 44:38:39:00:00:0c; fixed-address 192.168.200.1; option host-name "tti-core-1"; option cumulus-provision-url "http://192.168.200.254/ztp_oob.sh";  } 
+host tti-core-1 {hardware ethernet 44:38:39:00:00:2c; fixed-address 192.168.200.1; option host-name "tti-core-1"; option cumulus-provision-url "http://192.168.200.254/ztp_oob.sh";  } 
 
-host tti-core-2 {hardware ethernet 44:38:39:00:00:0e; fixed-address 192.168.200.2; option host-name "tti-core-2"; option cumulus-provision-url "http://192.168.200.254/ztp_oob.sh";  } 
+host tti-core-2 {hardware ethernet 44:38:39:00:00:2e; fixed-address 192.168.200.2; option host-name "tti-core-2"; option cumulus-provision-url "http://192.168.200.254/ztp_oob.sh";  } 
 
-host tti-tor-1 {hardware ethernet 44:38:39:00:00:10; fixed-address 192.168.200.11; option host-name "tti-tor-1"; option cumulus-provision-url "http://192.168.200.254/ztp_oob.sh";  } 
+host tti-tor-1 {hardware ethernet 44:38:39:00:00:30; fixed-address 192.168.200.11; option host-name "tti-tor-1"; option cumulus-provision-url "http://192.168.200.254/ztp_oob.sh";  } 
 
-host tti-tor-2 {hardware ethernet 44:38:39:00:00:12; fixed-address 192.168.200.12; option host-name "tti-tor-2"; option cumulus-provision-url "http://192.168.200.254/ztp_oob.sh";  } 
+host tti-tor-2 {hardware ethernet 44:38:39:00:00:32; fixed-address 192.168.200.12; option host-name "tti-tor-2"; option cumulus-provision-url "http://192.168.200.254/ztp_oob.sh";  } 
 }#End of static host group
 
