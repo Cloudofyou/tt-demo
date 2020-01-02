@@ -1,0 +1,41 @@
+---
+- hosts: tti-tor-1 
+  tasks:
+   - name: Configure tti-tor-1
+     nclu:
+       commands:
+         
+         - add bgp vrf CLIENT1 autonomous-system 65222
+         - add bgp vrf CLIENT1 neighbor 10.222.128.187 remote-as 65222
+         - add bgp vrf CLIENT1 neighbor 10.222.128.187 bfd
+         - add bgp vrf CLIENT1 neighbor 10.222.128.187 description TTI-tt-TOR-2
+         - add bgp vrf CLIENT1 neighbor 10.222.128.190 remote-as 65111
+         - add bgp vrf CLIENT1 neighbor 10.222.128.190 bfd
+         - add bgp vrf CLIENT1 neighbor 10.222.128.190 description TTI-tt-CORE-1
+         - add bgp vrf CLIENT1 neighbor 10.222.128.187 next-hop-self
+         - add bgp vrf CLIENT1 neighbor 10.222.128.187 send-community
+         - add bgp vrf CLIENT1 neighbor 10.222.128.190 send-community
+         - add bgp vrf CLIENT1 network 10.222.130.32/27 
+         - add bond bond01 bond slaves swp53s1,swp54s1
+         - add bond bond02 bond slaves swp53s2,swp54s2
+         - add bond bond01 ip address 10.222.128.186/31
+         - add bond bond01 vrf CLIENT1
+         - add bond bond02 bridge vids 2011,2022
+         - add bridge bridge ports bond02,swp1,swp2,swp3,swp4
+         - add bridge bridge vids 2011,2020,2022
+         - add bridge bridge vlan-aware
+         - add interface swp1-4 bridge access 2022
+         - add interface swp53s1-2,swp54s1-2
+         - add loopback lo ip address 10.222.130.96/32
+         - add vlan 2020 vlan-id 2020
+         - add vlan 2020 vlan-raw-device bridge
+         - add vlan 2020 vrf CLIENT1
+         - add vlan 2022 ip address 10.222.130.34/27
+         - add vlan 2022 ip address-virtual 00:5e:00:00:00:01 10.222.130.33/27
+         - add vlan 2022 vlan-id 2022
+         - add vlan 2022 vlan-raw-device bridge
+         - add vlan 2022 vrf CLIENT1
+         - add vrf CLIENT1 ip address 10.222.130.96/32
+         - add vrf CLIENT1,mgmt vrf-table auto
+       
+       commit: true
